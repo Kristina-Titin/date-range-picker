@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Date Range Picker</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 100%;
+            margin: auto;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+	    height: 150vh;
+        }
+	
+	.date-range-picker-container > p {
+	    font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .date-input {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .date-range-picker-container {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+
+        .date-range-picker-container .date-display {
+            cursor: pointer;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            width: 80%;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+
+        .daterangepicker .cancelBtn {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+	.navbar {
+	    display: flex;
+	    top: 0;
+	    position: fixed;
+	    width: 100%;
+	    margin-bottom: 500px;
+	}
+	.isi-nav {
+	    display: flex;
+	    flex-direction: row;
+	    justify-content: space-between;
+	    align-items: center;
+	    width: 85%;
+	    font-size: 22px;
+	    margin: auto;
+	}
+	.h2-nav {
+	    display: flex;
+	    flex-direction: row;
+	    align-items: center;
+	}
+	.h2-nav > p {font-size: 20px; margin-left: 25px;}
+    </style>
+</head>
+<body>
+    <div class="date-range-picker-container navbar">
+	<div class="isi-nav">
+		<div class= "h2-nav"><h2>Tugas JavaScript</h2> <p id="demo">Inputan Form (tanggal & waktu)</div>
+		<div class= "img-nav"><img src="https://2.bp.blogspot.com/-Qbru57k3GMQ/UvODUUZR-oI/AAAAAAAABsQ/nOlXt6hzM3s/s1600/Telkom+Schools.jpg" alt="telkom" width="150" height="50"></div>
+    	</div>
+   </div><br><br><br><br><br><br><br><br><br><br>
+        
+    <div class="date-range-picker-container">
+        <h2>Date Range Picker</h2>
+        <p id="demo">Input Date Type 1</p>
+        <input type="text" class="date-input" name="daterange" value="01/01/2018 - 01/15/2018" />
+    </div>
+
+    <div class="date-range-picker-container">
+        <h2>Date Time Picker</h2> <p id="demo">Input Date Type 2</p>
+        <input type="text" class="date-input" name="datetimes" />
+    </div>
+
+    <div class="date-range-picker-container">
+        <h2>Birthday Picker</h2><p id="demo">Input Date Type 3</p>
+        <input type="text" class="date-input" name="birthday" value="10/24/1984" />
+    </div>
+
+    <div class="date-range-picker-container">
+        <h2>Report Range Picker</h2><p id="demo">Input Date Type 4</p>
+        <div id="reportrange" class="date-display">
+            <i class="fa fa-calendar"></i>&nbsp;
+            <span></span> <i class="fa fa-caret-down"></i>
+        </div>
+    </div>
+
+    <div class="date-range-picker-container">
+        <h2>Date Filter Picker</h2><p id="demo">Input Date Type 5</p>
+        <input type="text" class="date-input" name="datefilter" value="" />
+    </div>
+
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // DATE 1
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'left'
+            }, function (start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
+
+            // DATE 2
+            $('input[name="datetimes"]').daterangepicker({
+                timePicker: true,
+                startDate: moment().startOf('hour'),
+                endDate: moment().startOf('hour').add(32, 'hour'),
+                locale: {
+                    format: 'M/DD hh:mm A'
+                }
+            });
+
+            // DATE 3
+            $('input[name="birthday"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                minYear: 1901,
+                maxYear: parseInt(moment().format('YYYY'), 10)
+            }, function (start, end, label) {
+                var years = moment().diff(start, 'years');
+                alert("You are " + years + " years old!");
+            });
+
+            // DATE 4
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+
+            $('#reportrange').daterangepicker({
+                startDate: start,
+                endDate: end,
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+
+            cb(start, end);
+
+            // DATE 5
+            $('input[name="datefilter"]').daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            });
+
+            $('input[name="datefilter"]').on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+            });
+
+            $('input[name="datefilter"]').on('cancel.daterangepicker', function (ev, picker) {
+                $(this).val('');
+            });
+        });
+    </script>
+</body>
+</html>
