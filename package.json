@@ -1,0 +1,22 @@
+{
+  "name": "@titin/date-range",
+  "version": "1.0.0",
+  "description": "date range picker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kristina-titin/date-range-picker"
+  },
+  "keywords": [
+    "WDS"
+  ],
+  "author": "Web Dev Simplified",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kristina-titin/date-range-picker/issues"
+  },
+  "homepage": "https://github.com/kristina-titin/date-range-picker#readme"
+}
